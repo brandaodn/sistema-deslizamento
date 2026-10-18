@@ -1,0 +1,16 @@
+<div class="mb-3">
+  <label for="idPais" class="form-label">Selecione o País</label>
+  <select class="form-select" id="idPais" name="idPais" required>
+    <option value="" disabled selected>-- Escolha um país --</option>
+    <% if (pais && pais.length > 0) { %>
+      <% pais.forEach(function(p) { %>
+        <option value="<%= p.id_pais %>"><%= p.nome_pais %></option>
+      <% }) %>
+    <% } %>
+  </select>
+</div>
+
+<div class="mb-3">
+  <label for="nomePais" class="form-label">Novo Nome</label>
+  <input type="text" class="form-control" id="nomePais" name="nomePais" placeholder="Insira o novo nome do país" required>
+</div>

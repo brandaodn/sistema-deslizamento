@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%- include('partials/header', { css: '/css/insercao.css', title: 'Edição de Dados' }) %>
+<body>
+    <div class="container mt-5">
+        <%- include('./partials/back-button', { backUrl: '/menu' }) %>
+        
+        <h1 class="text-center mb-4">Edição de Dados</h1>
+        
+            <%- mensagem %>
+            <div class="accordion" id="dataInsertionAccordion">
+
+                <% if(tipo === 'administrador'){ %>
+                    <%- include('partials/form-accordion', {
+                        headingId: 'editPaisHeading',
+                        collapseId: 'editPaisCollapse',
+                        titulo: 'Editar País',
+                        formId: 'formEditPais',
+                        action: '/editPais',
+                        method: 'post',
+                        formPartial: '../forms/edit/form-pais-edit',
+                        show: false,
+                        expanded: false,
+                        botaoTexto: 'Editar País'
+                    }) %>
+
+                    <%- include('partials/form-accordion', {
+                        headingId: 'ufEditHeading',
+                        collapseId: 'ufEditCollapse',
+                        titulo: 'Editar UF (Estado)',
+                        formId: 'formEditUF',
+                        action: '/editUF',
+                        method: 'post',
+                        formPartial: '../forms/edit/form-uf-edit',
+                        show: false,
+                        expanded: false,
+                        botaoTexto: 'Editar Estado'
+                    }) %>
+
+                    <%- include('partials/form-accordion', {
+                        headingId: 'municipioEditHeading',
+                        collapseId: 'municipioEditCollapse',
+                        titulo: 'Editar Município',
+                        formId: 'formMunicipioEdit',
+                        action: '/editMun',
+                        method: 'post',
+                        formPartial: '../forms/edit/form-municipio-edit',
+                        show: false,
+                        expanded: false,
+                        botaoTexto: 'Editar Município'
+                    }) %>
+
+
+                <% } %>
+
+                <%- include('partials/form-accordion', { 
+                    headingId: 'eventoEditHeading',
+                    collapseId: 'eventoEditCollapse',
+                    titulo: 'Editar Evento',
+                    formId: 'formEditEvento',
+                    action: '/editEvento',
+                    method: 'post',
+                    formPartial: '../forms/edit/form-evento-edit',
+                    show: false,
+                    expanded: false,
+                    botaoTexto: 'Editar Evento'
+                }) %>
+
+                <%- include('partials/form-accordion', { 
+                    headingId: 'midiaEditHeading',
+                    collapseId: 'midiaEditCollapse',
+                    titulo: 'Editar Mídia',
+                    formId: 'formEditMidia',
+                    action: '/editMidia',
+                    method: 'post',
+                    formPartial: '../forms/edit/form-midia-edit',
+                    show: false,
+                    expanded: false,
+                    botaoTexto: 'Editar Mídia'
+                }) %>
+
+            </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

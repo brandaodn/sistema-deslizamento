@@ -1,0 +1,39 @@
+<%
+    const isReadonlyMode = typeof readonly !== "undefined" ? readonly : false;
+%>
+
+<%- include('../../form-evento-impacto', {readonly: isReadonlyMode}) %>
+
+<script src="/js/form-select-linker.js"></script>
+<script>
+    const selectId = "idEvento";
+
+    linkSelectToTextInput(selectId, "tempoRecuperacaoSocial", "data-isoc-tempo-recuperacao");
+    linkSelectToCheckboxes(selectId, "servicosEssenciaisAfetados", "data-isoc-servicos");
+    linkSelectToTextInput(selectId, "nFamiliasAfetadas", "data-isoc-n-familias-afetadas");
+    linkSelectToTextInput(selectId, "nDesalojados", "data-isoc-n-desalojados");
+    linkSelectToTextInput(selectId, "nDesaparecidos", "data-isoc-n-desaparecidos");
+    linkSelectToTextInput(selectId, "nMortos", "data-isoc-n-mortos");
+    linkSelectToTextInput(selectId, "nFeridos", "data-isoc-n-feridos");
+    linkSelectToTextInput(selectId, "nDesabrigados", "data-isoc-n-desabrigados");
+
+    linkSelectToSelectInput(selectId, "seguroCobertura", "data-ie-seguro-cobertura");
+    linkSelectToTextInput(selectId, "custoRecuperacao", "data-ie-custo-recuperacao");
+    linkSelectToTextInput(selectId, "danoPatrimonioPrivado", "data-ie-dano-patrimonio-privado");
+    linkSelectToTextInput(selectId, "danoPatrimonioPublico", "data-ie-dano-patrimonio-publico");
+    linkSelectToTextInput(selectId, "danoEconomicoTotal", "data-ie-valor-total-danos-economicos");
+    linkSelectToTextInput(selectId, "duracaoInterrupcaoEconomica", "data-ie-interrupcao-economica-duracao");
+    linkSelectToCheckboxes(selectId, "setoresAfetados", "data-ie-interrupcao-economica-setores-afetados");
+    linkSelectToTextInput(selectId, "danosAgricolasValorEstimado", "data-ie-danos-agricolas-valor-estimado");
+    linkSelectToTextInput(selectId, "danosAgricolasAreaAtingida", "data-ie-danos-agricolas-area-atingida");
+    linkSelectToTextInput(selectId, "danosAgricolasPercentualAreaAtingida", "data-ie-danos-agricolas-percentual-area-atingida");
+    linkSelectToTextInput(selectId, "danosAgricolasCulturaAtingida", "data-ie-danos-agricolas-cultura-atingida");
+
+    linkSelectToTextInput(selectId, "areaAtingida", "data-ia-area-atingida");
+    linkSelectToTextInput(selectId, "custoMitigacao", "data-ia-custo-mitigacao");
+    linkSelectToTextInput(selectId, "recursosAfetados", "data-ia-recursos-naturais-afetados");
+    linkSelectToTextInput(selectId, "danosBiodiversidade", "data-ia-danos-biodiversidade");
+    linkSelectToTextInput(selectId, "tipoImpactoAmbiental", "data-ia-tipo-impacto");
+    linkSelectToTextInput(selectId, "tempoRecuperacaoAmbiental", "data-ia-tempo-recuperacao");
+    linkSelectToSelectInput(selectId, "statusRecuperacaoAmbiental", "data-ia-status-recuperacao");
+</script>

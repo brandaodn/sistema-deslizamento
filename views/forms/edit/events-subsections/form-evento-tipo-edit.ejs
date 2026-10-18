@@ -1,0 +1,13 @@
+<%
+    const isReadonlyMode = typeof readonly !== "undefined" ? readonly : false;
+%>
+
+<%- include('../../form-evento-tipo', {readonly: isReadonlyMode}) %>
+
+<script src="/js/form-select-linker.js"></script>
+<script>
+    linkSelectToTextInput("idEvento", "descricaoTipo", "data-tipo-descricao");
+    linkSelectToCheckboxes("idEvento", "categoriaTipo", "data-tipo-categoria");
+    linkSelectToSelectInput("idEvento", "materialDominanteTipo", "data-tipo-material-dominante");
+    linkSelectToTextInput("idEvento", "velocidadeTipo", "data-tipo-velocidade");
+</script>

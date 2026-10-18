@@ -1,0 +1,47 @@
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+require('dotenv').config();
+
+if (!process.env.SESSION_SECRET) {
+  throw new Error('SESSION_SECRET não definido');
+}
+
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
+
+const authRoutes = require('./routes/auth.routes');
+const menuRoutes = require('./routes/menu.routes');
+const insertionRoutes = require('./routes/insertion.routes');
+const editRoutes = require('./routes/edit.routes');
+const curationRoutes = require('./routes/curation.routes');
+const mapRoutes = require('./routes/map.routes');
+
+const basePath = '/movmassa';
+
+app.use(basePath, authRoutes);
+app.use(basePath, menuRoutes);
+app.use(basePath, insertionRoutes);
+app.use(basePath, editRoutes);
+app.use(basePath, curationRoutes);
+app.use(basePath, mapRoutes);
+
+app.get('/', (req, res) => {
+    res.redirect(basePath);
+});
+
+module.exports = { app };

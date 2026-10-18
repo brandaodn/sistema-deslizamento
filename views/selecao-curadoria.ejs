@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%- include('partials/header', { css: '/css/insercao.css', title: 'Curadoria de eventos' }) %>
+<body>
+    <div class="container mt-5">
+        <%- include('./partials/back-button', { backUrl: '/menu' }) %>
+        
+        <% if(evento.length === 0){ %>
+            <h1 class="text-center mb-4">Não existem eventos a serem curados</h1>
+            <h2 class="text-center mb-4">Verifique novamente mais tarde.</h2>
+        <% } else {%>
+            <h1 class="text-center mb-4">Curadoria de eventos</h1>
+            <h3 class="text-center mb-4"> Existem eventos nas seguintes datas que ainda não foram avaliados:</h3>
+        
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <% evento.forEach(e => { %>
+                    <a href="/movmassa/Curadoria/eventos?data=<%= e.data_sem_hora.toISOString().split('T')[0] %>"
+                    class="btn btn-primary btn-lg">
+                    <%= new Date(e.data_sem_hora).toLocaleDateString('pt-BR') %>
+                    </a>
+                <% }); %>
+            </div>
+        <% } %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>

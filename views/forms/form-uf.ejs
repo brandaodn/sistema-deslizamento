@@ -1,0 +1,15 @@
+<div class="mb-3">
+    <label for="nomeUF" class="form-label">Nome</label>
+    <input type="text" class="form-control" id="nomeUF" name="nomeUF" placeholder="Insira o nome do UF" required>
+</div>
+<div class="mb-3">
+    <label for="idPaisUF" class="form-label">País</label>
+    <select class="form-control" id="idPaisUF" name="idPaisUF" required>
+
+        <option value="" disabled selected>Selecione o país</option>
+        <% pais.forEach(function(paisItem) { %>
+            <option value="<%= paisItem.id_pais %>"><%= paisItem.nome_pais %></option>
+        <% }); %>
+            
+    </select>
+</div>

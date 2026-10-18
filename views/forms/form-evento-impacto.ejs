@@ -1,0 +1,250 @@
+<h1>Impactos do Evento</h1>
+
+<!--DADOS DE IMPACTOS SOCIAIS-->
+
+<h3>1. Sociais: </h3>
+
+<div class="mb-3">
+    <label for="tempoRecuperacaoSocial" class="form-label">Tempo de Recuperação (Dias)</label>
+    <input type="number" class="form-control" id="tempoRecuperacaoSocial" name="tempoRecuperacaoSocial"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 40' %>" step="1" min="0" max="2147483647"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Serviços Essenciais Afetados</label>
+
+    <% const servicos = [
+        "saúde e assistência médica",
+        "distribuição de medicamentos e saneamento básico",
+        "segurança pública e defesa civil",
+        "educação (em situações de calamidade pública)",
+        "transporte e funerários",
+        "assistência social e previdência pública"
+    ]; %>
+
+    <% servicos.forEach(s => { %>
+        <div>
+            <label>
+                <input type="checkbox" name="servicosEssenciaisAfetados" value="<%= s %>"
+                    <%= readonly ? 'disabled' : '' %>>
+                <%= s %>
+            </label>
+        </div>
+    <% }) %>
+</div>
+
+<% if (readonly) { %>
+    <input type="hidden" name="servicosEssenciaisAfetados" value="<%= evento[0].servicos_essenciais_afetados %>">
+<% } %>
+
+<!-- DADOS DE IMPACTOS SOCIAIS -->
+<div class="mb-3">
+    <label for="nFamiliasAfetadas" class="form-label">Número de Familias Afetadas</label>
+    <input type="number" class="form-control" id="nFamiliasAfetadas" name="nFamiliasAfetadas"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 8' %>" step="1" min="0" max="2147483647"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="nDesalojados" class="form-label">Número de Desalojados</label>
+    <input type="number" class="form-control" id="nDesalojados" name="nDesalojados"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 4' %>" step="1" min="0" max="2147483647"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="nDesaparecidos" class="form-label">Número de Desaparecidos</label>
+    <input type="number" class="form-control" id="nDesaparecidos" name="nDesaparecidos"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 3' %>" step="1" min="0" max="2147483647"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="nMortos" class="form-label">Número de Mortos</label>
+    <input type="number" class="form-control" id="nMortos" name="nMortos"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 7' %>" step="1" min="0" max="2147483647"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="nFeridos" class="form-label">Número de Feridos</label>
+    <input type="number" class="form-control" id="nFeridos" name="nFeridos"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 20' %>" step="1" min="0" max="2147483647"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="nDesabrigados" class="form-label">Número de Desabrigados</label>
+    <input type="number" class="form-control" id="nDesabrigados" name="nDesabrigados"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 10' %>" step="1" min="0" max="2147483647"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<!-- DADOS DE IMPACTOS ECONÔMICOS -->
+<h3>2. Econômicos: </h3>
+
+<div class="mb-3">
+    <label for="seguroCobertura" class="form-label">Seguro Cobertura</label>
+    <select class="form-control" id="seguroCobertura" name="seguroCobertura"
+        <%= readonly ? 'disabled' : '' %>>
+        <option value=""><%= readonly ? 'Dado não preenchido' : 'Selecione uma opção' %></option>
+        <option value="true">Possui</option>
+        <option value="false">Não possui</option>
+    </select>
+</div>
+
+<% if (readonly) { %>
+    <input type="hidden" name="seguroCobertura" value="<%= evento[0].seguro_cobertura %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="custoRecuperacao" class="form-label">Custo de Recuperação (R$)</label>
+    <input type="number" class="form-control" id="custoRecuperacao" name="custoRecuperacao"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 10000.50' %>" step="0.01" min="0"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="danoPatrimonioPrivado" class="form-label">Dano ao Patrimônio Privado (R$)</label>
+    <input type="number" class="form-control" id="danoPatrimonioPrivado" name="danoPatrimonioPrivado"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 1340.50' %>" step="0.01" min="0"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="danoPatrimonioPublico" class="form-label">Dano ao Patrimônio Publico (R$)</label>
+    <input type="number" class="form-control" id="danoPatrimonioPublico" name="danoPatrimonioPublico"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 1340.50' %>" step="0.01" min="0"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="danoEconomicoTotal" class="form-label">Valor Total do Dano Econômico (R$)</label>
+    <input type="number" class="form-control" id="danoEconomicoTotal" name="danoEconomicoTotal"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 1340.50' %>" step="0.01" min="0"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="duracaoInterrupcaoEconomica" class="form-label">Duracao da Interrupção Econômica (Dias)</label>
+
+    <input type="number" class="form-control" id="duracaoInterrupcaoEconomica" name="duracaoInterrupcaoEconomica"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 3' %>" step="1" min="0"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="setoresAfetados" class="form-label">Setores Afetados na Interrupção Econômica</label>
+
+    <% const setores = [
+        "energia elétrica, gás e combustíveis",
+        "produção e distribuição de alimentos",
+        "serviços portuários, aeroportuários e transporte coletivo",
+        "telecomunicações e comunicação",
+        "controle de tráfego aéreo"
+    ]; %>
+
+    <% setores.forEach(s => { %>
+        <div>
+            <label>
+                <input type="checkbox" name="setoresAfetados" value="<%= s %>"
+                    <%= readonly ? 'disabled' : '' %>>
+                <%= s %>
+            </label>
+        </div>
+    <% }) %>
+</div>
+
+<% if (readonly) { %>
+    <input type="hidden" name="setoresAfetados" value="<%= evento[0].setores_afetados %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="danosAgricolasValorEstimado" class="form-label">Valor Estimado dos Danos Agrícolas (R$)</label>
+    <input type="number" class="form-control" id="danosAgricolasValorEstimado" name="danosAgricolasValorEstimado"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 1340.50' %>" step="0.01" min="0"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="danosAgricolasAreaAtingida" class="form-label">Área Atingida por Danos Agrícolas (m²)</label>
+    <input type="number" class="form-control" id="danosAgricolasAreaAtingida" name="danosAgricolasAreaAtingida"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 1340.50' %>" step="0.01" min="0"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="danosAgricolasPercentualAreaAtingida" class="form-label">Percentual da Área Atingida por Danos Agrícolas</label>
+    <input type="number" class="form-control" id="danosAgricolasPercentualAreaAtingida" name="danosAgricolasPercentualAreaAtingida"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 50.30' %>" step="0.01" min="0"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="danosAgricolasCulturaAtingida" class="form-label">Cultura Atingida por Danos Agrícolas</label>
+    <input type="text" class="form-control" id="danosAgricolasCulturaAtingida" name="danosAgricolasCulturaAtingida"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: Arroz, Feijão' %>"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<!--DADOS DE IMPACTOS AMBIENTAIS-->
+
+<h3>3. Ambientais: </h3>
+
+<div class="mb-3">
+    <label for="areaAtingida" class="form-label">Área Atingida (m²)</label>
+    <input type="number" class="form-control" id="areaAtingida" name="areaAtingida"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 500.25' %>" step="0.01" min="0"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="custoMitigacao" class="form-label">Custo de Mitigação (R$)</label>
+    <input type="number" class="form-control" id="custoMitigacao" name="custoMitigacao"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 10000.50' %>" step="0.01" min="0"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="recursosAfetados" class="form-label">Recursos Naturais Afetados</label>
+    <input type="text" class="form-control" id="recursosAfetados" name="recursosAfetados"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: Água, Florestas' %>"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="danosBiodiversidade" class="form-label">Danos à Biodiversidade</label>
+    <input type="text" class="form-control" id="danosBiodiversidade" name="danosBiodiversidade"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: Perda de espécies' %>"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="tipoImpactoAmbiental" class="form-label">Tipo de Impacto</label>
+    <input type="text" class="form-control" id="tipoImpactoAmbiental" name="tipoImpactoAmbiental"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: Poluição' %>"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="tempoRecuperacaoAmbiental" class="form-label">Tempo de Recuperação (Dias)</label>
+    <input type="number" class="form-control" id="tempoRecuperacaoAmbiental" name="tempoRecuperacaoAmbiental"
+        placeholder="<%= readonly ? 'Dado não preenchido' : 'Ex: 90' %>" step="1" min="0" max="2147483647"
+        <%= readonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="statusRecuperacaoAmbiental" class="form-label">Status de Recuperação</label>
+    <select class="form-control" id="statusRecuperacaoAmbiental" name="statusRecuperacaoAmbiental"
+        <%= readonly ? 'disabled' : '' %>>
+        <option value=""><%= readonly ? 'Dado não preenchido' : 'Selecione uma opção' %></option>
+        <option value="não iniciado">Não iniciado</option>
+        <option value="em andamento">Em andamento</option>
+        <option value="finalizado">Finalizado</option>
+    </select>
+</div>
+
+<% if (readonly) { %>
+    <input type="hidden" name="statusRecuperacaoAmbiental" value="<%= evento[0].status_recuperacao_ambiental %>">
+<% } %>

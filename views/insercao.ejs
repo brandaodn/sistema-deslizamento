@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%- include('partials/header', { css: '/css/insercao.css', title: 'Inserção de Dados' }) %>
+<body>
+    <div class="container mt-5">
+        <%- include('./partials/back-button', { backUrl: '/menu' }) %>
+
+        <h1 class="text-center mb-4">Inserção de Dados</h1>
+        
+  
+            <%- mensagem %>
+
+        
+        <div class="accordion" id="dataInsertionAccordion">
+            
+        
+        <% if(tipo === 'administrador'){ %>
+            <!-- ADICIONA PAISES-->
+
+            <%- include('partials/form-accordion', {
+                headingId: 'paisHeading',
+                collapseId: 'paisCollapse',
+                titulo: 'Adicionar País',
+                formId: 'formPais',
+                action: '/addPais',
+                method: 'post',
+                formPartial: '../forms/form-pais', 
+                show: false,
+                expanded: false,
+                botaoTexto: 'Adicionar País'
+            }) %>
+
+            <!--ADCIONA ESTADOS(UF)-->
+
+            <%- include('partials/form-accordion', {
+                headingId: 'ufHeading',
+                collapseId: 'ufCollapse',
+                titulo: 'Adicionar UF (Estado)',
+                formId: 'formUF',
+                action: '/addUF',
+                method: 'post',
+                formPartial: '../forms/form-uf',
+                show: false,
+                expanded: false,
+                botaoTexto: 'Adicionar Estado'
+            }) %>
+
+            <!--ADCIONA MUNICIPIOS-->
+
+            <%- include('partials/form-accordion', {
+                headingId: 'municipioHeading',
+                collapseId: 'municipioCollapse',
+                titulo: 'Adicionar Município',
+                formId: 'formMunicipio',
+                action: '/addMun',
+                method: 'post',
+                formPartial: '../forms/form-municipio',
+                show: false,
+                expanded: false,
+                botaoTexto: 'Adicionar Município'
+            }) %>
+            
+            <!-- ADICIONA USUÁRIOS -->
+
+            <%- include('partials/form-accordion', {
+                headingId: 'userHeading',
+                collapseId: 'userCollapse',
+                titulo: 'Adicionar Usuário',
+                formId: 'formUser',
+                action: '/addUser',
+                method: 'post',
+                formPartial: '../forms/form-user',
+                show: false,
+                expanded: false,
+                botaoTexto: 'Adicionar Usuário'
+            }) %>
+
+            <% } %>
+
+            <!-- ADICIONA EVENTOS-->
+
+            <%- include('partials/form-accordion', {
+                headingId: 'eventoHeading',
+                collapseId: 'eventoCollapse',
+                titulo: 'Adicionar Evento',
+                formId: 'formEvento',
+                action: '/addEvento',
+                method: 'post',
+                formPartial: '../forms/form-evento',
+                show: false,
+                expanded: false,
+                botaoTexto: 'Adicionar Evento'
+            }) %>
+
+            <!-- ADICIONA MIDIAS-->
+
+            <%- include('partials/form-accordion', {
+                headingId: 'midiaHeading',
+                collapseId: 'midiaCollapse',
+                titulo: 'Adicionar Mídia',
+                formId: 'formMidia',
+                action: '/addMidia',
+                method: 'post',
+                formPartial: '../forms/form-midia',
+                show: false,
+                expanded: false,
+                botaoTexto: 'Adicionar Mídia'
+            }) %>
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>

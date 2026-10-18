@@ -1,0 +1,75 @@
+<div class="mb-3">
+    <label for="idMidia" class="form-label">Selecione a Mídia a editar</label>
+    <select class="form-control" id="idMidia" name="idMidia" required>
+        <option value="" disabled selected>Selecione a mídia</option>
+        <% midia.forEach(function(midiaItem) { %>
+            <option value="<%= midiaItem.id_midia %>" 
+                data-idevento="<%= midiaItem.id_evento %>" 
+                data-tipo="<%= midiaItem.tipo_midia %>" 
+                data-fonte="<%= midiaItem.fonte_midia %>"
+                data-url="<%= midiaItem.url_midia %>"
+                data-date="<%= midiaItem.data_coleta.toISOString().split('T')[0] %>"
+            >
+                <%= midiaItem.url_midia %>
+            </option>
+        <% }); %>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="tipoMidia" class="form-label">Novo Tipo</label>
+    <select class="form-control" id="tipoMidia" name="tipoMidia" required>
+        <option value="" disabled selected>Selecione o tipo da mídia</option>
+        <option value="Foto"> Foto </option>
+        <option value="Vídeo"> Vídeo </option>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="fonteMidia" class="form-label">Nova Fonte</label>
+    <select class="form-control" id="fonteMidia" name="fonteMidia" required>
+        <option value="" disabled selected>Selecione a fonte da mídia</option>
+        <option value="Jornal"> Jornal </option>
+        <option value="Pessoal"> Pessoal </option>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="dataColeta" class="form-label">Nova Data da Coleta</label>
+    <input type="date" class="form-control" id="dataColeta" name="dataColeta">
+</div>
+
+<div class="mb-3">
+    <label for="urlMidia" class="form-label">Nova URL</label>
+    <input type="text" class="form-control" id="urlMidia" name="urlMidia" placeholder="Insira a nova URL da mídia" required>
+</div>
+
+<div class="mb-3">
+    <label for="idEventoMidia" class="form-label">Novo Evento</label>
+    <select class="form-control" id="idEventoMidia" name="idEventoMidia" required>
+        <option value="" disabled selected>Selecione o novo evento</option>
+        <% evento.forEach(function(eventoItem) { %>
+            <option value="<%= eventoItem.id_evento %>">
+                <%
+                let data = new Date(eventoItem.data_evento);
+                let dia = data.getDate().toString().padStart(2, '0');
+                let mes = (data.getMonth() + 1).toString().padStart(2, '0');
+                let ano = data.getFullYear();
+                let dataFormatada = dia + '/' + mes + '/' + ano;
+                %>
+                Data: <%= dataFormatada %> 
+                Longitude: <%= eventoItem.coordenadas_x %> 
+                Latitude: <%= eventoItem.coordenadas_y %>
+            </option>
+        <% }); %>
+    </select>                                                             
+</div>
+
+<script src="/js/form-select-linker.js"></script>
+<script>
+    linkSelectToSelectInput("idMidia", "idEventoMidia", "data-idevento");
+    linkSelectToSelectInput("idMidia", "tipoMidia", "data-tipo");
+    linkSelectToSelectInput("idMidia", "fonteMidia", "data-fonte");
+    linkSelectToDateInput("idMidia", "dataColeta", "data-date");
+    linkSelectToTextInput("idMidia", "urlMidia", "data-url");
+</script>

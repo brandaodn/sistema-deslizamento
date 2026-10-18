@@ -1,0 +1,25 @@
+<h1>Informações gerais</h1>
+<div class="mb-3">
+  <label for="dataEvento" class="form-label">Data e hora do registro (Horário de Brasília)</label>
+  <input type="datetime-local" class="form-control" id="dataEvento" name="dataEvento" required>
+</div>
+<div class="mb-3">
+    <label for="longitudeEvento" class="form-label">Longitude</label>
+    <input type="number" class="form-control" id="longitudeEvento" name="longitudeEvento" placeholder="Ex: -46.633345" step="0.000001" min="-180" max="180" required>
+</div>
+<div class="mb-3">
+    <label for="latitudeEvento" class="form-label">Latitude</label>
+    <input type="number" class="form-control" id="latitudeEvento" name="latitudeEvento" placeholder="Ex: -23.550511" step="0.000001" min="-90" max="90" required>
+</div>
+<div class="mb-3">
+    <label for="idMunicipioEvento" class="form-label">Município</label>
+    <select class="form-control" id="idMunicipioEvento" name="idMunicipioEvento" required>
+
+        <option value="" disabled selected>Selecione o município</option>
+        <% mun.forEach(function(munItem) { %>
+            <option value="<%= munItem.id_municipio %>"><%= munItem.nome_uf %> - <%= munItem.nome_municipio %></option>
+        <% }); %>
+
+    </select>
+        
+</div>

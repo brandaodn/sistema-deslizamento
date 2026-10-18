@@ -1,0 +1,46 @@
+<%
+    const isReadonlyMode = typeof readonly !== "undefined" ? readonly : false;
+%>
+
+<%- include('../../form-evento-deflagrador', {readonly: isReadonlyMode}) %>
+
+<script src="/js/form-select-linker.js"></script>
+<script>
+    const origemId = "idEvento";
+
+    linkSelectToTextInput(origemId, "vento", "data-clima-vento");
+    linkSelectToTextInput(origemId, "precipitacaoEvento", "data-clima-precipitacao-evento");
+    linkSelectToTextInput(origemId, "precipitacao5d", "data-clima-precipitacao-5d");
+    linkSelectToTextInput(origemId, "precipitacao10d", "data-clima-precipitacao-10d");
+    linkSelectToTextInput(origemId, "precipitacaoMensal", "data-clima-precipitacao-mensal");
+    linkSelectToTextInput(origemId, "temperatura", "data-clima-temperatura");
+    linkSelectToTextInput(origemId, "etp", "data-clima-etp");
+    linkSelectToTextInput(origemId, "pressaoAtm", "data-clima-pressao-atm");
+
+    linkSelectToSelectInput(origemId, "escavacao", "data-fa-escavacao");
+    linkSelectToSelectInput(origemId, "mineracao", "data-fa-mineracao");
+    linkSelectToSelectInput(origemId, "sobrecarga", "data-fa-sobrecarga");
+    linkSelectToSelectInput(origemId, "tipoUso", "data-fa-tipo-uso");
+
+    linkSelectToSelectInput(origemId, "tipoRocha", "data-geologia-tipo-rocha");
+    linkSelectToTextInput(origemId, "composicao", "data-geologia-composicao");
+    linkSelectToTextInput(origemId, "estrutura", "data-geologia-estrutura");
+    linkSelectToTextInput(origemId, "idade", "data-geologia-idade");
+    linkSelectToSelectInput(origemId, "tectonismo", "data-geologia-tectonismo");
+
+    linkSelectToSelectInput(origemId, "declividade", "data-geomorfologia-declividade");
+    linkSelectToTextInput(origemId, "altitude", "data-geomorfologia-altitude");
+    linkSelectToSelectInput(origemId, "orientacao", "data-geomorfologia-orientacao");
+    linkSelectToSelectInput(origemId, "curvaturaHorizontal", "data-geomorfologia-curvatura-horizontal");
+    linkSelectToSelectInput(origemId, "curvaturaVertical", "data-geomorfologia-curvatura-vertical");
+
+    linkSelectToTextInput(origemId, "urlPedologia", "data-pedologia-url");
+    linkSelectToSelectInput(origemId, "classeSolo", "data-pedologia-classe-solo");
+    linkSelectToTextInput(origemId, "profundidade", "data-pedologia-profundidade");
+    linkSelectToSelectInput(origemId, "textura", "data-pedologia-textura");
+    linkSelectToTextInput(origemId, "porosidade", "data-pedologia-porosidade");
+    linkSelectToTextInput(origemId, "uvcc", "data-pedologia-uv-cc");
+    linkSelectToTextInput(origemId, "uvEvento", "data-pedologia-uv-evento");
+    linkSelectToTextInput(origemId, "cad", "data-pedologia-cad");
+    linkSelectToTextInput(origemId, "k", "data-pedologia-k");
+</script>

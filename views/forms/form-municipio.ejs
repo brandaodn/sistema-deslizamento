@@ -1,0 +1,15 @@
+<div class="mb-3">
+    <label for="nomeMunicipio" class="form-label">Nome</label>
+    <input type="text" class="form-control" id="nomeMunicipio" name="nomeMunicipio" placeholder="Insira o nome do município" required>
+</div>
+<div class="mb-3">
+    <label for="idEstadoMunicipio" class="form-label">UF</label>
+    <select class="form-control" id="idEstadoMunicipio" name="idEstadoMunicipio" required>
+
+        <option value="" disabled selected >Selecione o UF</option>
+        <% uf.forEach(function(ufItem) { %>
+            <option value="<%= ufItem.id_uf %>"><%= ufItem.nome_uf %></option>
+        <% }); %>
+
+    </select>
+</div>

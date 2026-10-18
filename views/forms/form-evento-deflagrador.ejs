@@ -1,0 +1,344 @@
+<%
+    // Definindo valores padrão para os parâmetros
+    const isReadonly = typeof readonly !== 'undefined' ? readonly : false;
+%>
+
+<h1>Agentes Deflagradores do Evento</h1>
+
+<!-- DADOS DOS FATORES EXTRÍNSECOS - CLIMA -->
+
+<h3>1.1 Fatores Extrínsecos - Clima</h3>
+
+<div class="mb-3">
+    <label for="vento" class="form-label">Velocidade do Vento (m/s)</label>
+    <input type="number" class="form-control" id="vento" name="vento"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 10.50' %>" step="0.01" min="0"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="precipitacaoEvento" class="form-label">Precipitação Durante o Evento (ml)</label>
+    <input type="number" class="form-control" id="precipitacaoEvento" name="precipitacaoEvento"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 50.25' %>" step="0.01" min="0"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="precipitacao5d" class="form-label">Precipitação nos Últimos 5 Dias (ml)</label>
+    <input type="number" class="form-control" id="precipitacao5d" name="precipitacao5d"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 120.75' %>" step="0.01" min="0"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="precipitacao10d" class="form-label">Precipitação nos Últimos 10 Dias (ml)</label>
+    <input type="number" class="form-control" id="precipitacao10d" name="precipitacao10d"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 250.00' %>" step="0.01" min="0"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="precipitacaoMensal" class="form-label">Precipitação Mensal (ml)</label>
+    <input type="number" class="form-control" id="precipitacaoMensal" name="precipitacaoMensal"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 450.50' %>" step="0.01" min="0"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="temperatura" class="form-label">Temperatura (°C)</label>
+    <input type="number" class="form-control" id="temperatura" name="temperatura"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 22.50' %>" step="0.01" min="0"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="etp" class="form-label">Evapotraspiração Potencial (mm/Dia)</label>
+    <input type="number" class="form-control" id="etp" name="etp"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 5.75' %>" step="0.01" min="0"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="pressaoAtm" class="form-label">Pressão Atmosférica (hPa)</label>
+    <input type="number" class="form-control" id="pressaoAtm" name="pressaoAtm"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 1013.25' %>" step="0.01" min="0"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<!-- DADOS FATORES ANTROPICOS -->
+
+<h3>1.2 Fatores Extrínsecos - Fatores Antropicos</h3>
+
+<div class="mb-3">
+    <label for="escavacao" class="form-label">Escavação</label>
+    <select class="form-control" id="escavacao" name="escavacao" <%= isReadonly ? 'disabled' : '' %>>
+        <option value="" selected><%= isReadonly ? 'Dado não preenchido' : 'Selecione uma opção' %></option>
+        <option value="true">Ocorreu</option>
+        <option value="false">Não ocorreu</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="escavacao" value="<%= evento[0].escavacao %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="mineracao" class="form-label">Mineração</label>
+    <select class="form-control" id="mineracao" name="mineracao" <%= isReadonly ? 'disabled' : '' %>>
+        <option value="" selected><%= isReadonly ? 'Dado não preenchido' : 'Selecione uma opção' %></option>
+        <option value="true">Ocorreu</option>
+        <option value="false">Não ocorreu</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="mineracao" value="<%= evento[0].mineracao %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="sobrecarga" class="form-label">Sobrecarga</label>
+    <select class="form-control" id="sobrecarga" name="sobrecarga" <%= isReadonly ? 'disabled' : '' %>>
+        <option value="" selected><%= isReadonly ? 'Dado não preenchido' : 'Selecione uma opção' %></option>
+        <option value="true">Ocorreu</option>
+        <option value="false">Não Ocorreu</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="sobrecarga" value="<%= evento[0].sobrecarga %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="tipoUso" class="form-label">Composição</label>
+    <input type="text" class="form-control" id="tipo_uso" name="tipo_uso"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : '' %>"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<!-- DADOS FATORES INTRÍNSECOS - GEOLOGIA -->
+
+<h3>2.1 Fatores Intrínsecos - Geologia</h3>
+
+<div class="mb-3">
+    <label for="tipoRocha" class="form-label">Tipo de Rocha</label>
+    <select class="form-control" id="tipoRocha" name="tipoRocha" <%= isReadonly ? 'disabled' : '' %>>
+        <option value="" selected><%= isReadonly ? 'Dado não preenchido' : 'Selecione o tipo de rocha' %></option>
+        <option value="sedimentar">Sedimentar</option>
+        <option value="metamófica">Metamófica</option>
+        <option value="ígnea">Ígnea</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="tipoRocha" value="<%= evento[0].tipo_rocha %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="composicao" class="form-label">Composição</label>
+    <input type="text" class="form-control" id="composicao" name="composicao"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: Quartzo, Feldspato' %>"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="estrutura" class="form-label">Estrutura</label>
+    <input type="text" class="form-control" id="estrutura" name="estrutura"
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Defina a estrutura' %>"
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="idade" class="form-label">Idade (milhões de anos)</label>
+    <input type="number" class="form-control" id="idade" name="idade" 
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 200' %>" 
+           step="1" min="0" max="2147483647" 
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="tectonismo" class="form-label">Tectonismo</label>
+    <select class="form-control" id="tectonismo" name="tectonismo" <%= isReadonly ? 'disabled' : '' %>>
+        <option value="" selected><%= isReadonly ? 'Dado não preenchido' : 'Selecione uma opção' %></option>
+        <option value="true">Possui</option>
+        <option value="false">Não possui</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="tectonismo" value="<%= evento[0].tectonismo %>">
+<% } %>
+
+<!-- GEOMORFOLOGIA -->
+<h3>2.2 Fatores Intrínsecos - Geomorfologia</h3>
+
+<div class="mb-3">
+    <label for="declividade" class="form-label">Declividade</label>
+    <select class="form-control" id="declividade" name="declividade" <%= isReadonly ? 'disabled' : '' %>>>
+        <option value="" selected>Selecione a declividade</option>
+        <option value="plano">Plano: 0% - 3%</option>
+        <option value="suave-ondulado">Suave-Ondulado: 3% - 8%</option>
+        <option value="ondulado">Ondulado: 8% - 20%</option>
+        <option value="forte-ondulado">Forte-Ondulado: 20% - 45%</option>
+        <option value="montanhoso">Montanhoso: 45% - 75%</option>
+        <option value="escarpado">Escarpado: Acima de 75%</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="declividade" value="<%= evento[0].declividade %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="altitude" class="form-label">Altitude (m)</label>
+    <input type="number" class="form-control" id="altitude" name="altitude" placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 4' %>" step="1" min="0" max="2147483647" <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="orientacao" class="form-label">Orientação</label>
+    <select class="form-control" id="orientacao" name="orientacao" <%= isReadonly ? 'disabled' : '' %>>>
+        <option value="" selected>Selecione a orientação</option>
+        <option value="norte">Norte</option>
+        <option value="nordeste">Nordeste</option>
+        <option value="leste">Leste</option>
+        <option value="sudeste">Sudeste</option>
+        <option value="sul">Sul</option>
+        <option value="sudoeste">Sudoeste</option>
+        <option value="oeste">Oeste</option>
+        <option value="noroeste">Noroeste</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="orientacao" value="<%= evento[0].orientacao %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="curvaturaHorizontal" class="form-label">Curvatura Horizontal</label>
+    <select class="form-control" id="curvaturaHorizontal" name="curvaturaHorizontal" <%= isReadonly ? 'disabled' : '' %>>
+        <option value="" selected><%= isReadonly ? 'Dado não preenchido' : 'Selecione a curvatura horizontal' %></option>
+        <option value="convergente">Convergente</option>
+        <option value="planar">Planar</option>
+        <option value="divergente">Divergente</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="curvaturaHorizontal" value="<%= evento[0].curvatura_horizontal %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="curvaturaVertical" class="form-label">Curvatura Vertical</label>
+    <select class="form-control" id="curvaturaVertical" name="curvaturaVertical" <%= isReadonly ? 'disabled' : '' %>>
+        <option value="" selected><%= isReadonly ? 'Dado não preenchido' : 'Selecione a curvatura vertical' %></option>
+        <option value="côncava">Concava</option>
+        <option value="retilíneo">Retilíneo</option>
+        <option value="convexa">Convexa</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="curvatura_vertical" value="<%= evento[0].curvatura_vertical %>">
+<% } %>
+
+<!-- PEDOLOGIA -->
+<h3>2.3 Fatores Intrínsecos - Pedologia</h3>
+
+<div class="mb-3">
+    <label for="urlPedologia" class="form-label">Url da Pedologia</label>
+    <input type="text" class="form-control" id="urlPedologia" name="urlPedologia" 
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Insira a URL' %>" 
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="classeSolo" class="form-label">Classe do Solo</label>
+    <select class="form-control" id="classeSolo" name="classeSolo" <%= isReadonly ? 'disabled' : '' %>>>
+        <option value="" selected><%= isReadonly ? 'Dado não preenchido' : 'Selecione a classe do solo' %></option>
+        <option value="latossolo">Latossolo</option>
+        <option value="argissolo">Argissolo</option>
+        <option value="neossolo">Neossolo</option>
+        <option value="cambissolo">Cambissolo</option>
+        <option value="nitossolo">Nitossolo</option>
+        <option value="gleissolo">Gleissolo</option>
+        <option value="planossolo">Planossolo</option>
+        <option value="plintossolo">Plintossolo</option>
+        <option value="luvissolo">Luvissolo</option>
+        <option value="chernossolo">Chernossolo</option>
+        <option value="vertissolo">Vertissolo</option>
+        <option value="espodossolo">Espodossolo</option>
+        <option value="organossolo">Organossolo</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="classeSolo" value="<%= evento[0].classe_solo %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="profundidade" class="form-label">Profundidade (cm)</label>
+    <input type="number" class="form-control" id="profundidade" name="profundidade" placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 50' %>" step="1" min="0" max="2147483647" <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="textura" class="form-label">Textura</label>
+    <select class="form-control" id="textura" name="textura" <%= isReadonly ? 'disabled' : '' %>>
+        <option value="" selected><%= isReadonly ? 'Dado não preenchido' : 'Selecione a textura' %></option>
+        <option value="muito argilosa">Muito argilosa</option>
+        <option value="argila">Argila</option>
+        <option value="argilo-siltosa">Argilo-siltosa</option>
+        <option value="argilo-arenosa">Argilo-arenosa</option>
+        <option value="franco-argilosa">Franco-argilosa</option>
+        <option value="franco-argilo-siltosa">Franco-argilo-siltosa</option>
+        <option value="franco-argilo-arenosa">Franco-argilo-arenosa</option>
+        <option value="franca">Franca</option>
+        <option value="franco-siltosa">Franco-siltosa</option>
+        <option value="franco-arenoso">Franco-arenoso</option>
+        <option value="areia-franca">Areia-franca</option>
+        <option value="areia">Areia</option>
+        <option value="silte">Silte</option>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="textura" value="<%= evento[0].textura %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="porosidade" class="form-label">Porosidade (%)</label>
+    <input type="number" class="form-control" id="porosidade" name="porosidade" 
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : '' %>" 
+           step="1" min="0" max="2147483647" 
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="uvcc" class="form-label">Umidade Volumétrica na Capacidade de Campo (cm³/cm³)</label>
+    <input type="number" class="form-control" id="uvcc" name="uvcc" 
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : '' %>" 
+           step="0.01" min="0" 
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="uvEvento" class="form-label">Umidade Volumétrica do Solo no Evento (cm³/cm³)</label>
+    <input type="number" class="form-control" id="uvEvento" name="uvEvento" 
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : '' %>" 
+           step="0.01" min="0" 
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="cad" class="form-label">Capacidade de Água Disponível (ml)</label>
+    <input type="number" class="form-control" id="cad" name="cad" 
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : '' %>" 
+           step="0.01" min="0" 
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="k" class="form-label">Condutividade Hidráulica do Solo (cm/h)</label>
+    <input type="number" class="form-control" id="k" name="k" 
+           placeholder="<%= isReadonly ? 'Dado não preenchido' : '' %>" 
+           step="0.01" min="0" 
+           <%= isReadonly ? 'readonly' : '' %>>
+</div>

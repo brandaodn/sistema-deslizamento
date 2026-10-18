@@ -1,0 +1,166 @@
+<%
+const isReadonly = typeof readonly !== 'undefined' ? readonly : false;
+const eventId = typeof eventoId !== 'undefined' ? eventoId : null;
+%>
+<% if(isReadonly && readonly == false) { %>
+    <h1>Informações gerais do evento (Edição)</h1>
+<% } %>
+<div class="mb-3">
+    <label for="idEvento" class="form-label"><%= isReadonly ? 'Evento selecionado' : 'Selecione o evento' %></label>
+    <select class="form-control" id="idEvento" name="idEvento" required <%= isReadonly ? 'disabled' : '' %>>
+        <option value="" disabled <%= !eventId ? 'selected' : '' %>>Escolha um evento</option>
+        <% evento.forEach(function(evt) { %>
+            <option value="<%= evt.id_evento %>"
+                <%= eventId && evt.id_evento == eventId ? 'selected' : '' %>
+                <%
+                    const dt = evt.data_evento;
+                    const local = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000)
+                                        .toISOString()
+                                        .slice(0,16); 
+                %>
+                    data-date="<%= local %>"
+                    data-longitude="<%= evt.coordenadas_x %>"
+                    data-latitude="<%= evt.coordenadas_y %>"
+                    data-idmunicipio="<%= evt.id_municipio %>"
+                    data-idtipo="<%= evt.id_tipo %>"
+
+                    data-tipo-descricao="<%= evt.descricao %>"
+                    data-tipo-categoria="<%= evt.categoria %>"
+                    data-tipo-material-dominante="<%= evt.material_dominante %>"
+                    data-tipo-velocidade="<%= evt.velocidade %>"
+
+                    data-isoc-tempo-recuperacao="<%= evt.tempo_recuperacao %>"
+                    data-isoc-servicos="<%= evt.servicos_essenciais_afetados %>"
+                    data-isoc-n-familias-afetadas="<%= evt.n_familias_afetadas %>"
+                    data-isoc-n-desalojados="<%= evt.n_desalojados %>"
+                    data-isoc-n-desaparecidos="<%= evt.n_desaparecidos %>"
+                    data-isoc-n-mortos="<%= evt.n_mortos %>"
+                    data-isoc-n-feridos="<%= evt.n_feridos %>"
+                    data-isoc-n-desabrigados="<%= evt.n_desabrigados %>"
+
+                    data-ie-seguro-cobertura="<%= evt.seguro_cobertura %>"
+                    data-ie-custo-recuperacao="<%= evt.custo_recuperacao %>"
+                    data-ie-dano-patrimonio-privado="<%= evt.dano_patrimonio_privado %>"
+                    data-ie-dano-patrimonio-publico="<%= evt.dano_patrimonio_publico %>"
+                    data-ie-valor-total-danos-economicos="<%= evt.valor_total_danos_economicos %>"
+                    data-ie-interrupcao-economica-duracao="<%= evt.interrupcao_economica_duracao %>"
+                    data-ie-interrupcao-economica-setores-afetados="<%= evt.interrupcao_economica_setores_afetados %>"
+                    data-ie-danos-agricolas-valor-estimado="<%= evt.danos_agricolas_valor_estimado %>"
+                    data-ie-danos-agricolas-area-atingida="<%= evt.danos_agricolas_area_atingida %>"
+                    data-ie-danos-agricolas-percentual-area-atingida="<%= evt.danos_agricolas_percentual_area_atingida %>"
+                    data-ie-danos-agricolas-cultura-atingida="<%= evt.danos_agricolas_cultura_atingida %>"
+
+                    data-ia-area-atingida="<%= evt.area_atingida %>"
+                    data-ia-custo-mitigacao="<%= evt.custo_mitigacao %>"
+                    data-ia-recursos-naturais-afetados="<%= evt.recursos_naturais_afetados %>"
+                    data-ia-danos-biodiversidade="<%= evt.danos_biodiversidade %>"
+                    data-ia-tipo-impacto="<%= evt.tipo_impacto %>"
+                    data-ia-tempo-recuperacao="<%= evt.tempo_recuperacao %>"
+                    data-ia-status-recuperacao="<%= evt.status_recuperacao %>"
+
+                    data-fe-id="<%= evt.id_fe %>"
+
+                    data-clima-id="<%= evt.id_clima %>"
+                    data-clima-vento="<%= evt.vento %>"
+                    data-clima-precipitacao-evento="<%= evt.precipitacao_evento %>"
+                    data-clima-precipitacao-5d="<%= evt.precipitacao_5d %>"
+                    data-clima-precipitacao-10d="<%= evt.precipitacao_10d %>"
+                    data-clima-precipitacao-mensal="<%= evt.precipitacao_mensal %>"
+                    data-clima-temperatura="<%= evt.temperatura %>"
+                    data-clima-etp="<%= evt.etp %>"
+                    data-clima-pressao-atm="<%= evt.pressao_atm %>"
+
+                    data-fa-id="<%= evt.id_fatores_antropicos %>"
+                    data-fa-escavacao="<%= evt.escavacao %>"
+                    data-fa-mineracao="<%= evt.mineracao %>"
+                    data-fa-sobrecarga="<%= evt.sobrecarga %>"
+                    data-fa-tipo-uso="<%= evt.tipo_uso %>"
+
+                    data-fi-id="<%= evt.id_fi %>"
+
+                    data-geologia-id="<%= evt.id_geologia %>"
+                    data-geologia-tipo-rocha="<%= evt.tipo_rocha %>"
+                    data-geologia-composicao="<%= evt.composicao %>"
+                    data-geologia-estrutura="<%= evt.estrutura %>"
+                    data-geologia-idade="<%= evt.idade %>"
+                    data-geologia-tectonismo="<%= evt.tectonismo %>"
+
+                    data-geomorfologia-id="<%= evt.id_geomorfologia %>"
+                    data-geomorfologia-declividade="<%= evt.declividade %>"
+                    data-geomorfologia-altitude="<%= evt.altitude %>"
+                    data-geomorfologia-orientacao="<%= evt.orientacao %>"
+                    data-geomorfologia-curvatura-horizontal="<%= evt.curvatura_horizontal %>"
+                    data-geomorfologia-curvatura-vertical="<%= evt.curvatura_vertical %>"
+                    data-geomorfologia-forma-terreno="<%= evt.forma_terreno %>"
+
+                    data-pedologia-id="<%= evt.id_pedologia %>"
+                    data-pedologia-url="<%= evt.pedologia_url %>"
+                    data-pedologia-classe-solo="<%= evt.classe_solo %>"
+                    data-pedologia-profundidade="<%= evt.profundidade %>"
+                    data-pedologia-textura="<%= evt.textura %>"
+                    data-pedologia-porosidade="<%= evt.porosidade %>"
+                    data-pedologia-uv-cc="<%= evt.uv_cc %>"
+                    data-pedologia-uv-evento="<%= evt.uv_evento %>"
+                    data-pedologia-cad="<%= evt.cad %>"
+                    data-pedologia-k="<%= evt.k %>"
+                >
+                <%= local.replace("T", " ") %> — Lat: <%= evt.coordenadas_y %>, Lng: <%= evt.coordenadas_x %>            </option>
+        <% }); %>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="idMunicipioEvento" class="form-label">Município</label>
+    <select class="form-control" id="idMunicipioEvento" name="idMunicipioEvento" required <%= isReadonly ? 'disabled' : '' %>>
+        <option value="" disabled>Selecione o município</option>
+        <% mun.forEach(function(munItem) { %>
+            <option value="<%= munItem.id_municipio %>">
+                <%= munItem.nome_municipio %>
+            </option>
+        <% }); %>
+    </select>
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="nomeMunicipio" value="<%= evento[0].nome_municipio %>">
+<% } %>
+
+<div class="mb-3">
+    <label for="dataEvento" class="form-label">Data e hora do registro (Horário de Brasília)</label>
+    <input type="datetime-local" class="form-control" id="dataEvento" name="dataEvento" required <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="longitudeEvento" class="form-label">Longitude</label>
+    <input type="number" class="form-control" id="longitudeEvento" name="longitudeEvento"
+        placeholder="Ex: -46.633345" step="0.000001" min="-180" max="180"
+        required <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<div class="mb-3">
+    <label for="latitudeEvento" class="form-label">Latitude</label>
+    <input type="number" class="form-control" id="latitudeEvento" name="latitudeEvento"
+        placeholder="Ex: -23.550511" step="0.000001" min="-90" max="90"
+        required <%= isReadonly ? 'readonly' : '' %>>
+</div>
+
+<script src="/js/form-select-linker.js"></script>
+<script>
+    linkSelectToSelectInput("idEvento", "idMunicipioEvento", "data-idmunicipio");
+    linkSelectToDateInput("idEvento", "dataEvento", "data-date");
+    linkSelectToTextInput("idEvento", "longitudeEvento", "data-longitude");
+    linkSelectToTextInput("idEvento", "latitudeEvento", "data-latitude");
+    
+    // Se um eventoId foi passado, seleciona automaticamente o evento
+    <% if (eventId) { %>
+        document.addEventListener('DOMContentLoaded', function() {
+            const select = document.getElementById('idEvento');
+            if (select) {
+                select.value = '<%= eventId %>';
+                // Dispara o evento change para preencher os outros campos
+                const event = new Event('change', { bubbles: true });
+                select.dispatchEvent(event);
+            }
+        });
+    <% } %>
+</script>

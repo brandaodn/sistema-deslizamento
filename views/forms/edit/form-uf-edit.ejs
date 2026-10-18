@@ -1,0 +1,31 @@
+<div class="mb-3">
+  <label for="idUF" class="form-label">Selecione o Estado a editar</label>
+  <select class="form-control" id="idUF" name="idUF" required>
+    <option value="" disabled selected>Selecione o estado</option>
+    <% uf.forEach(function(ufItem) { %>
+        <option value="<%= ufItem.id_uf %>" data-idpais="<%= ufItem.id_pais %>">
+            <%= ufItem.nome_uf %>
+        </option>
+    <% }); %>
+  </select>
+</div>
+
+<div class="mb-3">
+  <label for="nomeUF" class="form-label">Novo Nome</label>
+  <input type="text" class="form-control" id="nomeUF" name="nomeUF" placeholder="Insira o novo nome do UF" required>
+</div>
+
+<div class="mb-3">
+  <label for="idPaisUF" class="form-label">Novo País</label>
+  <select class="form-control" id="idPaisUF" name="idPaisUF" required>
+      <option value="" disabled selected>Selecione o novo país</option>
+      <% pais.forEach(function(paisItem) { %>
+          <option value="<%= paisItem.id_pais %>"><%= paisItem.nome_pais %></option>
+      <% }); %>
+  </select>
+</div>
+
+<script src="/js/form-select-linker.js"></script>
+<script>
+  linkSelectToSelectInput("idUF", "idPaisUF", "data-idpais");
+</script>

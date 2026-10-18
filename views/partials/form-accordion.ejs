@@ -1,0 +1,15 @@
+<div class="accordion-item">
+  <h2 class="accordion-header" id="<%= headingId %>">
+    <button class="accordion-button collapsed"  type="button" data-bs-toggle="collapse" data-bs-target="#<%= collapseId %>" aria-expanded="<%= expanded %>" aria-controls="<%= collapseId %>">
+      <%= titulo %>
+    </button>
+  </h2>
+  <div id="<%= collapseId %>" class="accordion-collapse collapse <%= show ? 'show' : '' %>" aria-labelledby="<%= headingId %>">
+    <div class="accordion-body">
+      <form id="<%= formId %>" action="/movmassa<%= action %>" method="<%= method || 'post' %>">
+        <%- include(formPartial) %>
+        <button type="submit" class="btn btn-success"><%= botaoTexto || 'Enviar' %></button>
+      </form>
+    </div>
+  </div>
+</div>

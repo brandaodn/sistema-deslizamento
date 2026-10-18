@@ -1,0 +1,118 @@
+<%
+    const isReadonly = typeof readonly !== "undefined" ? readonly : false;
+%>
+
+<h1><%= isReadonly ? "Tipo do Evento (Visualização)" : "Tipo do Evento" %></h1>
+
+<div class="mb-3">
+    <label for="descricaoTipo" class="form-label">Descrição</label>
+    <input 
+        type="text" 
+        class="form-control" 
+        id="descricaoTipo" 
+        name="descricaoTipo" 
+        placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Descreva brevemente o evento' %>"
+        <%= isReadonly ? "readonly" : "" %>
+    >
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Categoria</label>
+
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="queda rochosa" <%= isReadonly ? "disabled" : "" %>>
+            Queda rochosa
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="tombamento" <%= isReadonly ? "disabled" : "" %>>
+            Tombamento
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="escorregamento rotacional" <%= isReadonly ? "disabled" : "" %>>
+            Escorregamento rotacional
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="escorregamento translacional" <%= isReadonly ? "disabled" : "" %>>
+            Escorregamento translacional
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="espalhamento lateral" <%= isReadonly ? "disabled" : "" %>>
+            Espalhamento lateral
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="fluxo de detritos" <%= isReadonly ? "disabled" : "" %>>
+            Fluxo de detritos
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="fluxo de detritos vulcânicos" <%= isReadonly ? "disabled" : "" %>>
+            Fluxo de detritos vulcânicos
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="avalanche de detritos" <%= isReadonly ? "disabled" : "" %>>
+            Avalanche de detritos
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="fluxo de terra" <%= isReadonly ? "disabled" : "" %>>
+            Fluxo de terra
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="fluxo lento de terra" <%= isReadonly ? "disabled" : "" %>>
+            Fluxo lento de terra
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="categoriaTipo" value="Escoamento em subsolos permanentemente gelados" <%= isReadonly ? "disabled" : "" %>>
+            Escoamento em subsolos permanentemente gelados
+        </label>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label for="descricaoTipo" class="form-label">Material dominante</label>
+    <input 
+        type="text" 
+        class="form-control" 
+        id="materialDominanteTipo" 
+        name="materialDominanteTipo" 
+        placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Escreva o material dominante' %>"
+        <%= isReadonly ? "readonly" : "" %>
+    >
+</div>
+
+<div class="mb-3">
+    <label for="velocidadeTipo" class="form-label">Velocidade (m/s)</label>
+    <input 
+        type="number" 
+        class="form-control" 
+        id="velocidadeTipo" 
+        name="velocidadeTipo" 
+        step="0.01" 
+        min="0" 
+        placeholder="<%= isReadonly ? 'Dado não preenchido' : 'Ex: 200.40' %>"
+        <%= isReadonly ? "readonly" : "" %>
+    >
+</div>
+
+<% if (isReadonly) { %>
+    <input type="hidden" name="categoriaTipo" value="<%= evento[0].categoria %>">
+<% } %>

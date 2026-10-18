@@ -1,0 +1,31 @@
+<div class="mb-3">
+  <label for="idMunicipio" class="form-label">Selecione o Município a editar</label>
+  <select class="form-control" id="idMunicipio" name="idMunicipio" required>
+      <option value="" disabled selected>Selecione o município</option>
+      <% mun.forEach(function(munItem) { %>
+          <option value="<%= munItem.id_municipio %>" data-uf="<%= munItem.id_uf %>">
+              <%= munItem.nome_municipio %>
+          </option>
+      <% }); %>
+  </select>
+</div>
+
+<div class="mb-3">
+  <label for="nomeMunicipio" class="form-label">Novo Nome</label>
+  <input type="text" class="form-control" id="nomeMunicipio" name="nomeMunicipio" placeholder="Insira o novo nome do município" required>
+</div>
+
+<div class="mb-3">
+  <label for="idEstadoMunicipio" class="form-label">Novo UF</label>
+  <select class="form-control" id="idEstadoMunicipio" name="idEstadoMunicipio" required>
+      <option value="" disabled selected>Selecione o novo UF</option>
+      <% uf.forEach(function(ufItem) { %>
+          <option value="<%= ufItem.id_uf %>"><%= ufItem.nome_uf %></option>
+      <% }); %>
+  </select>
+</div>
+
+<script src="/js/form-select-linker.js"></script>
+<script>
+  linkSelectToSelectInput("idMunicipio", "idEstadoMunicipio", "data-uf");
+</script>
