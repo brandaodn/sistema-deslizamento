@@ -1,5 +1,6 @@
 name: Import project
 # retry after validated chunk sync
+# retry 3
 
 on:
   push:
