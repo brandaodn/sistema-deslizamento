@@ -50,6 +50,7 @@ module.exports = {
                         if (Number.isInteger(destinoMidiaNumero) && destinoMidiaNumero > 0) {
                             const destinoExiste = await client.query('SELECT 1 FROM evento WHERE id_evento = $1', [destinoMidiaNumero]);
                             if (destinoExiste.rows.length === 0) {
+                                req.session.mensagem = '<div class="alert alert-danger text-center" role="alert"><p> Evento de destino da mídia inválido </p></div>';
                                 throw new Error("DESTINO_MIDIA_INVALIDO");
                             }
                             await client.query('UPDATE midia SET id_evento = $1 WHERE id_evento = $2', [destinoMidiaNumero, idEventoNumero]);
@@ -58,6 +59,7 @@ module.exports = {
                         mensagemSucesso = "Evento repetido deletado com sucesso";
                         break;
                     default:
+                        req.session.mensagem = '<div class="alert alert-danger text-center" role="alert"><p> Avaliação não identificada </p></div>';
                         throw new Error("COMANDO_NAO_IDENTIFICADO");
                 }
             });
