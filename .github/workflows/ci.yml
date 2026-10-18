@@ -32,6 +32,8 @@ jobs:
       DB_PASSWORD: postgres
       DB_NAME: movmassa_test
       DB_PORT: 5432
+      USER_EMAIL: ci-${{ github.run_id }}@example.invalid
+      USER_PASSWORD: ${{ github.run_id }}
 
     steps:
       - uses: actions/checkout@v4
@@ -47,6 +49,9 @@ jobs:
         env:
           PGPASSWORD: postgres
         run: psql -h localhost -U postgres -d movmassa_test -f scriptBD.sql
+
+      - name: Seed administrator
+        run: node usuario1.js
 
       - name: Check JavaScript syntax
         run: find . -path './node_modules' -prune -o -name '*.js' -print0 | xargs -0 -n1 node --check
