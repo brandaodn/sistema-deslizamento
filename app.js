@@ -10,6 +10,13 @@ if (!process.env.SESSION_SECRET) {
 
 const app = express();
 
+const isProduction = process.env.NODE_ENV === 'production';
+const sessionCookieName = process.env.SESSION_COOKIE_NAME || 'movmassa.sid';
+
+if (isProduction) {
+    app.set('trust proxy', 1);
+}
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -18,10 +25,15 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(session({
+    name: sessionCookieName,
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.SESSION_COOKIE_SECURE === 'true' || isProduction
+    }
 }));
 
 const authRoutes = require('./routes/auth.routes');
