@@ -6,8 +6,8 @@ require('dotenv').config();
 
 describe('Página de adicionar usuários do administrador / Curador  (/addUser)', () => {
     const testUsers = [
-        { email: 'newtestuser@example.com', senha: 'validpassword123', tipo:'comum' },
-        { email: 'anothertestuser@example.com', senha: 'otherpassword123', tipo:'Curador' }
+        { email: 'newtestuser@example.com', senha: 'ValidPassword123!', tipo:'comum' },
+        { email: 'anothertestuser@example.com', senha: 'OtherPassword123!', tipo:'Curador' }
     ];
 
     const email = process.env.USER_EMAIL;
@@ -63,7 +63,7 @@ describe('Página de adicionar usuários do administrador / Curador  (/addUser)'
         
         const res = await agent
             .post('/movmassa/addUser')
-            .send({ email: testUsers[1].email, senha: 'anotherpass123', tipo : testUsers[1].tipo })
+            .send({ email: testUsers[1].email, senha: 'AnotherPass123!', tipo : testUsers[1].tipo })
             .redirects(1);
         
         expect(res.statusCode).toBe(200);
