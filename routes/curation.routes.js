@@ -1,18 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const curationController = require('../controllers/curation.controller');
+const { isCuratorOrAdmin } = require('../middlewares/auth.middleware');
 
-const isModeratorOrAdmin = (req, res, next) => {
-    if (req.session.user && (req.session.user.tipo === 'Curador' || req.session.user.tipo === 'administrador')) {
-        return next();
-    }
-    else if(req.session.user){
-        return res.redirect('/movmassa/menu');
-    }
-    return res.redirect('/movmassa/');
-};
+router.get('/Curadoria/eventos', isCuratorOrAdmin, curationController.showCurationPage);
+router.get('/Curadoria/selecao', isCuratorOrAdmin, curationController.showAvailableEventsCurationPage);
+router.post('/realizar-Curadoria', isCuratorOrAdmin, curationController.doCuration);
 
-router.get('/Curadoria/eventos', isModeratorOrAdmin, curationController.showCurationPage);
-router.get('/Curadoria/selecao', isModeratorOrAdmin, curationController.showAvailableEventsCurationPage);
-router.post('/realizar-Curadoria', isModeratorOrAdmin, curationController.doCuration);
 module.exports = router;

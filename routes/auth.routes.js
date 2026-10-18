@@ -8,6 +8,5 @@ router.get('/register', authController.showRegister);
 router.post('/login', authController.login);
 router.post('/cadUser', authController.register);
 router.post('/logout', authController.logout);
-router.get('/menu', authController.showMenu);
 
 module.exports = router;

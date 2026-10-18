@@ -4,6 +4,7 @@ const { validarDataMenorQueHoje } = require('../utils/date.utils');
 const transactionWrapper = require('../utils/dbTransactions');
 const { pageInsertion } = require('../utils/menu.utils');
 const bcrypt = require('bcrypt');
+const { isStrongPassword, PASSWORD_REQUIREMENTS } = require('../utils/password.utils');
 
 
 module.exports = {
@@ -108,9 +109,15 @@ module.exports = {
         try {
             await transactionWrapper(client, async () => {
 
-                if (senha.length < 8) {
-                    req.session.mensagem = `<div class="alert alert-danger text-center" role="alert"><p> A senha deve ter pelo menos 8 caracteres </p></div>`;
-                    throw new Error("SENHA_CURTA");
+                if (!isStrongPassword(senha)) {
+                    req.session.mensagem = `<div class="alert alert-danger text-center" role="alert"><p> ${PASSWORD_REQUIREMENTS} </p></div>`;
+                    throw new Error("SENHA_FRACA");
+                }
+
+                const tiposPermitidos = ['comum', 'Curador', 'administrador'];
+                if (!tiposPermitidos.includes(tipo)) {
+                    req.session.mensagem = `<div class="alert alert-danger text-center" role="alert"><p> Tipo de usuário inválido </p></div>`;
+                    throw new Error("TIPO_USUARIO_INVALIDO");
                 }
 
                 const result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -130,7 +137,7 @@ module.exports = {
             return res.redirect('/movmassa/insercao');
 
         } catch (err) {
-            if (["SENHA_CURTA", "USUARIO_DUPLICADO"].includes(err.message)) {
+            if (["SENHA_FRACA", "TIPO_USUARIO_INVALIDO", "USUARIO_DUPLICADO"].includes(err.message)) {
                 return res.redirect('/movmassa/insercao');
             }
 
