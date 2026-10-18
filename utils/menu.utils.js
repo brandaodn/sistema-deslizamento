@@ -226,7 +226,7 @@ const pageCuration = async (req, res, mensagem, dataSelecionada) => {
         const mensagemFinal = mensagem || req.session.mensagem;
         req.session.mensagem = null;
 
-        return res.render('Curadoria', {
+        return res.render('curadoria', {
             evento: evento.rows,
             mensagem: mensagemFinal,
             midia: midia.rows,
@@ -251,7 +251,7 @@ const pageSampleCurationAvailable = async (req, res, mensagem) => {
         const mensagemFinal = mensagem || req.session.mensagem;
         req.session.mensagem = null;
 
-        return res.render('selecao-Curadoria', {
+        return res.render('selecao-curadoria', {
             evento: evento.rows,
             mensagem: mensagemFinal
         });
