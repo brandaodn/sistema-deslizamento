@@ -13,54 +13,67 @@ module.exports = {
     doCuration: async (req, res, mensagem) => {
         const { idEvento, dataSelecionada, avaliacao, destinoMidia } = req.body;
 
-        const eventos = await client.query(`SELECT esta_validado FROM evento WHERE id_evento = ${idEvento}`);
+        const idEventoNumero = Number.parseInt(idEvento, 10);
+        const destinoMidiaNumero = Number.parseInt(destinoMidia, 10);
+
+        if (!Number.isInteger(idEventoNumero) || idEventoNumero <= 0) {
+            req.session.mensagem = `<div class="alert alert-danger text-center" role="alert"><p> Evento inválido </p></div>`;
+            return res.redirect(`/movmassa/Curadoria/eventos?data=${encodeURIComponent(dataSelecionada || '')}`);
+        }
+
+        const eventos = await client.query('SELECT esta_validado FROM evento WHERE id_evento = $1', [idEventoNumero]);
+
+        if (eventos.rows.length === 0) {
+            req.session.mensagem = `<div class="alert alert-danger text-center" role="alert"><p> Evento não encontrado </p></div>`;
+            return res.redirect(`/movmassa/Curadoria/eventos?data=${encodeURIComponent(dataSelecionada || '')}`);
+        }
 
         if(eventos.rows[0].esta_validado === true) {
             req.session.mensagem = `<div class="alert alert-danger text-center" role="alert"><p> Esse evento já passou por Curadoria </p></div>`;
-            return res.redirect(`/movmassa/Curadoria/eventos?data=${dataSelecionada}`);
+            return res.redirect(`/movmassa/Curadoria/eventos?data=${encodeURIComponent(dataSelecionada || '')}`);
         }
 
-        var comandoSQL = "";
-        var mensagemSucesso = "";
-        
-        switch (avaliacao) {
-            case "invalido":
-                comandoSQL = `DELETE FROM evento WHERE id_evento = ${idEvento}`;
-                mensagemSucesso = "Evento inválido deletado com sucesso";
-            break;
-            case "valido":
-                comandoSQL = `UPDATE evento SET esta_validado = true WHERE id_evento = ${idEvento}`;
-                mensagemSucesso = "Evento validado com sucesso";
-            break;
-            case "repetido":
-                if (destinoMidia != -1) {
-                    comandoSQL += `UPDATE midia SET id_evento = ${destinoMidia} WHERE id_evento = ${idEvento};\n`;
-                }
-                comandoSQL += `DELETE FROM evento WHERE id_evento = ${idEvento};`;
-                mensagemSucesso = "Evento repetido deletado com sucesso";
-            break;
-        }
+        let mensagemSucesso = "";
 
         try {
             await transactionWrapper(client, async () => {
-                if (comandoSQL === "") {
-                    req.session.mensagem = `<div class="alert alert-danger text-center" role="alert"><p> Avaliação não identificada </p></div>`;
-                    throw new Error("COMANDO_NAO_IDENTIFICADO");
+                switch (avaliacao) {
+                    case "invalido":
+                        await client.query('DELETE FROM evento WHERE id_evento = $1', [idEventoNumero]);
+                        mensagemSucesso = "Evento inválido deletado com sucesso";
+                        break;
+                    case "valido":
+                        await client.query('UPDATE evento SET esta_validado = true WHERE id_evento = $1', [idEventoNumero]);
+                        mensagemSucesso = "Evento validado com sucesso";
+                        break;
+                    case "repetido":
+                        if (Number.isInteger(destinoMidiaNumero) && destinoMidiaNumero > 0) {
+                            const destinoExiste = await client.query('SELECT 1 FROM evento WHERE id_evento = $1', [destinoMidiaNumero]);
+                            if (destinoExiste.rows.length === 0) {
+                                req.session.mensagem = '<div class="alert alert-danger text-center" role="alert"><p> Evento de destino da mídia inválido </p></div>';
+                                throw new Error("DESTINO_MIDIA_INVALIDO");
+                            }
+                            await client.query('UPDATE midia SET id_evento = $1 WHERE id_evento = $2', [destinoMidiaNumero, idEventoNumero]);
+                        }
+                        await client.query('DELETE FROM evento WHERE id_evento = $1', [idEventoNumero]);
+                        mensagemSucesso = "Evento repetido deletado com sucesso";
+                        break;
+                    default:
+                        req.session.mensagem = '<div class="alert alert-danger text-center" role="alert"><p> Avaliação não identificada </p></div>';
+                        throw new Error("COMANDO_NAO_IDENTIFICADO");
                 }
-
-                await client.query(comandoSQL);
             });
 
             req.session.mensagem = `<div class="alert alert-success text-center" role="alert"><p> ${mensagemSucesso} </p></div>`;
-            return res.redirect(`/movmassa/Curadoria/eventos?data=${dataSelecionada}`);
+            return res.redirect(`/movmassa/Curadoria/eventos?data=${encodeURIComponent(dataSelecionada || '')}`);
         } catch (error) {
             console.error(error);
-            if (error.message === "COMANDO_NAO_IDENTIFICADO") {
-                return res.redirect(`/movmassa/Curadoria/eventos?data=${dataSelecionada}`);
+            if (["COMANDO_NAO_IDENTIFICADO", "DESTINO_MIDIA_INVALIDO"].includes(error.message)) {
+                return res.redirect(`/movmassa/Curadoria/eventos?data=${encodeURIComponent(dataSelecionada || '')}`);
             }
 
             req.session.mensagem = `<div class="alert alert-danger text-center" role="alert"><p> Erro ao realizar Curadoria de evento </p></div>`;
-            return res.redirect(`/movmassa/Curadoria/eventos?data=${dataSelecionada}`);
+            return res.redirect(`/movmassa/Curadoria/eventos?data=${encodeURIComponent(dataSelecionada || '')}`);
         }
     }
 };

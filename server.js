@@ -1,10 +1,9 @@
 const { app } = require('./app');
-const port = 3000;
-
 require('dotenv').config();
 
-const ip = process.env.IP_ADDRESS || 'localhost'
+const port = parseInt(process.env.PORT, 10) || 3000;
+const ip = process.env.IP_ADDRESS || 'localhost';
 
 app.listen(port, ip, () => {
-    console.log(`Servidor rodando em http://${ip}:${port}`);
+    console.log('Servidor rodando em http://' + ip + ':' + port);
 });

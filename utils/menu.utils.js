@@ -177,10 +177,15 @@ const pageCuration = async (req, res, mensagem, dataSelecionada) => {
         }
         const intervaloHoras = 12;
         
+        if (!dataSelecionada || Number.isNaN(Date.parse(dataSelecionada))) {
+            req.session.mensagem = '<div class="alert alert-danger text-center" role="alert"><p> Data de curadoria inválida </p></div>';
+            return res.redirect('/movmassa/Curadoria/selecao');
+        }
+
         const evento = await client.query(`WITH eventos_filtrados AS (
                                             SELECT * FROM evento
-                                            WHERE data_evento BETWEEN TIMESTAMP '${dataSelecionada}' - INTERVAL '${intervaloHoras} hours'
-                                                AND TIMESTAMP '${dataSelecionada}' + INTERVAL '${intervaloHoras + 24} hours'
+                                            WHERE data_evento BETWEEN $1::timestamp - ($2 * INTERVAL '1 hour')
+                                                AND $1::timestamp + ($3 * INTERVAL '1 hour')
                                         )
                                         SELECT 
                                             e.id_evento, 
@@ -204,7 +209,7 @@ const pageCuration = async (req, res, mensagem, dataSelecionada) => {
                                             LEFT JOIN impactos_sociais isoc ON i.id_impacto = isoc.id_impacto
                                             
                                         ORDER BY e.data_evento DESC;
-                                        `);
+                                        `, [dataSelecionada, intervaloHoras, intervaloHoras + 24]);
 
         const midia = await client.query(`SELECT m.id_midia, 
                                                 m.tipo_midia, 
@@ -214,14 +219,14 @@ const pageCuration = async (req, res, mensagem, dataSelecionada) => {
                                                 m.id_evento
                                             FROM midia m JOIN evento e 
                                                 ON m.id_evento = e.id_evento
-                                            WHERE e.data_evento BETWEEN TIMESTAMP '${dataSelecionada}' - INTERVAL '${intervaloHoras} hours'
-                                                AND TIMESTAMP '${dataSelecionada}' + INTERVAL '${intervaloHoras + 24} hours'
-                                        `);
+                                            WHERE e.data_evento BETWEEN $1::timestamp - ($2 * INTERVAL '1 hour')
+                                                AND $1::timestamp + ($3 * INTERVAL '1 hour')
+                                        `, [dataSelecionada, intervaloHoras, intervaloHoras + 24]);
 
         const mensagemFinal = mensagem || req.session.mensagem;
         req.session.mensagem = null;
 
-        return res.render('Curadoria', {
+        return res.render('curadoria', {
             evento: evento.rows,
             mensagem: mensagemFinal,
             midia: midia.rows,
@@ -246,7 +251,7 @@ const pageSampleCurationAvailable = async (req, res, mensagem) => {
         const mensagemFinal = mensagem || req.session.mensagem;
         req.session.mensagem = null;
 
-        return res.render('selecao-Curadoria', {
+        return res.render('selecao-curadoria', {
             evento: evento.rows,
             mensagem: mensagemFinal
         });
@@ -328,9 +333,15 @@ const pageMapEventDetails = async (req, res, mensagem, idEvento) => {
         
         const mun = await client.query('SELECT * FROM municipio ORDER BY municipio.nome_municipio ASC');
 
+        const idEventoNumero = Number.parseInt(idEvento, 10);
+        if (!Number.isInteger(idEventoNumero) || idEventoNumero <= 0) {
+            req.session.mensagem = '<div class="alert alert-danger text-center" role="alert"><p> Evento inválido </p></div>';
+            return res.redirect('/movmassa/visualizar-eventos');
+        }
+
         const evento = await client.query(`WITH evento_selecionado AS (
                                             SELECT * FROM evento
-                                            WHERE id_evento = ${idEvento} 
+                                            WHERE id_evento = $1
                                         )
                                         SELECT 
                                             e.id_evento,
@@ -435,7 +446,7 @@ const pageMapEventDetails = async (req, res, mensagem, idEvento) => {
                                             LEFT JOIN geomorfologia gm ON fi.id_fi = gm.id_fi
                                             LEFT JOIN pedologia p ON fi.id_fi = p.id_fi
                                         ORDER BY e.data_evento DESC;
-                                        `);
+                                        `, [idEventoNumero]);
 
         const midia = await client.query(`SELECT m.id_midia, 
                                                 m.tipo_midia, 
@@ -445,8 +456,8 @@ const pageMapEventDetails = async (req, res, mensagem, idEvento) => {
                                                 m.id_evento
                                             FROM midia m JOIN evento e 
                                                 ON m.id_evento = e.id_evento
-                                            WHERE e.id_evento = ${idEvento}
-                                        `);
+                                            WHERE e.id_evento = $1
+                                        `, [idEventoNumero]);
 
         const mensagemFinal = mensagem || req.session.mensagem;
         req.session.mensagem = null;
@@ -456,7 +467,7 @@ const pageMapEventDetails = async (req, res, mensagem, idEvento) => {
             mun: mun.rows,
             mensagem: mensagemFinal,
             midia: midia.rows,
-            idEvento
+            idEvento: idEventoNumero
         });
     }catch(error){
         console.error('Erro ao acessar o banco de dados', error);

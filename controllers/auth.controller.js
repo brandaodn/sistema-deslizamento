@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const client = require('../db');
 const { pagMenu } = require('../utils/menu.utils');
 const transactionWrapper = require('../utils/dbTransactions');
+const { isStrongPassword, PASSWORD_REQUIREMENTS } = require('../utils/password.utils');
 
 module.exports = {
     showLogin: async (req, res) => {
@@ -36,6 +37,9 @@ module.exports = {
                 return res.render('login', { erro: '<p> Senha inválida! </p>', email });
             }
             
+            await new Promise((resolve, reject) => {
+                req.session.regenerate(err => err ? reject(err) : resolve());
+            });
             req.session.user = {
                 email: user.email,
                 tipo: user.tipo,
@@ -54,11 +58,8 @@ module.exports = {
         let error = null;
         try {
             await transactionWrapper(client, async () => {
-                const strongPasswordRegex =
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=.,?]).{8,}$/;
-
-                if (!strongPasswordRegex.test(senha)) {
-                    error = { view: 'register', data: { erro: "<p> A senha deve conter ao menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial </p>", email } };
+                if (!isStrongPassword(senha)) {
+                    error = { view: 'register', data: { erro: `<p> ${PASSWORD_REQUIREMENTS} </p>`, email } };
                     return;
                 }
 
@@ -70,16 +71,17 @@ module.exports = {
                     return;
                 }
 
-                req.session.user = {
-                    email: email,
-                    tipo: tipo,
-                };
-
                 await client.query('INSERT INTO users (tipo, email, senha) VALUES ($1, $2, $3)', [tipo, email, hashedPassword]);
             });
             if (error) {
                 return res.render(error.view, error.data);
             }
+
+            await new Promise((resolve, reject) => {
+                req.session.regenerate(err => err ? reject(err) : resolve());
+            });
+            req.session.user = { email, tipo };
+
             return pagMenu(res, req, `<div class="alert alert-success text-center" role="alert"><p> Usuário cadastrado com sucesso </p></div>`)
         } catch (error) {
             console.error(error);
@@ -93,7 +95,13 @@ module.exports = {
                 return res.status(500).send('Erro ao encerrar sessão');
             }
 
-            res.clearCookie('sid');
+            const cookieName = process.env.SESSION_COOKIE_NAME || 'movmassa.sid';
+            const secureCookie = process.env.SESSION_COOKIE_SECURE === 'true' || process.env.NODE_ENV === 'production';
+            res.clearCookie(cookieName, {
+                httpOnly: true,
+                sameSite: 'lax',
+                secure: secureCookie
+            });
             res.redirect('/movmassa/');
         });
   

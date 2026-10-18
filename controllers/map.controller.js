@@ -17,14 +17,20 @@ module.exports = {
             return res.redirect('/movmassa/visualizar-eventos?');
         }
 
-        const eventos = await client.query(`SELECT 1 FROM evento WHERE id_evento = ${idEvento}`);
+        const idEventoNumero = Number.parseInt(idEvento, 10);
+        if (!Number.isInteger(idEventoNumero) || idEventoNumero <= 0) {
+            req.session.mensagem = `<div class="alert alert-danger text-center" role="alert"><p> Evento inválido </p></div>`;
+            return res.redirect('/movmassa/visualizar-eventos?');
+        }
+
+        const eventos = await client.query('SELECT 1 FROM evento WHERE id_evento = $1', [idEventoNumero]);
 
         if(eventos.rows.length === 0) {
             req.session.mensagem = `<div class="alert alert-danger text-center" role="alert"><p> Esse evento foi alterado ou deletado do sistema </p></div>`;
             return res.redirect('/movmassa/visualizar-eventos?');
         }
         
-        return res.redirect(`/movmassa/mais-detalhes?evento=${idEvento}`);    
+        return res.redirect(`/movmassa/mais-detalhes?evento=${idEventoNumero}`);    
     },
     createCSV: async (req, res, mensagem) => {
         const campos = Object.assign({}, req.body);

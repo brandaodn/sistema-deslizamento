@@ -68,7 +68,7 @@ describe('Página de registro (/register)', () => {
             .send({ email: "email@email.com", senha: '1234567' });
         
         expect(res.statusCode).toBe(200); 
-        expect(res.text).toMatch(/A senha deve conter ao menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial/i);
+        expect(res.text).toMatch(/A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caracter especial/i);
     });
 
     it('Deve rejeitar senha sem letras maiúsculas', async () => {
@@ -77,7 +77,7 @@ describe('Página de registro (/register)', () => {
             .send({ email: 'weak1@example.com', senha: 'senha123!' });
 
         expect(res.statusCode).toBe(200);
-        expect(res.text).toMatch(/A senha deve conter ao menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial/i);
+        expect(res.text).toMatch(/A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caracter especial/i);
     });
 
     it('Deve rejeitar senha sem letras minúsculas', async () => {
@@ -86,7 +86,7 @@ describe('Página de registro (/register)', () => {
             .send({ email: 'weak2@example.com', senha: 'SENHA123!' });
 
         expect(res.statusCode).toBe(200);
-        expect(res.text).toMatch(/A senha deve conter ao menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial/i);
+        expect(res.text).toMatch(/A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caracter especial/i);
     });
 
     it('Deve rejeitar senha sem números', async () => {
@@ -95,7 +95,7 @@ describe('Página de registro (/register)', () => {
             .send({ email: 'weak3@example.com', senha: 'SenhaFort!' });
 
         expect(res.statusCode).toBe(200);
-        expect(res.text).toMatch(/A senha deve conter ao menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial/i);
+        expect(res.text).toMatch(/A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caracter especial/i);
     });
 
     it('Deve rejeitar senha sem caracteres especiais', async () => {
@@ -104,7 +104,7 @@ describe('Página de registro (/register)', () => {
             .send({ email: 'weak4@example.com', senha: 'Senha1234' });
 
         expect(res.statusCode).toBe(200);
-        expect(res.text).toMatch(/A senha deve conter ao menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial/i);
+        expect(res.text).toMatch(/A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caracter especial/i);
     });
 
     it('Deve aceitar senha forte com todos os critérios', async () => {

@@ -1,11 +1,15 @@
 async function transactionWrapper(client, callback) {
+    if (typeof client.withTransaction === 'function') {
+        return client.withTransaction(callback);
+    }
+
+    await client.query('BEGIN');
     try {
-        await client.query('BEGIN');
-        await callback();
+        const result = await callback(client);
         await client.query('COMMIT');
+        return result;
     } catch (error) {
         await client.query('ROLLBACK');
-        //res.status(500).send('Erro no servidor.');
         throw error;
     }
 }
