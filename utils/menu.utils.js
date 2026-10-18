@@ -150,7 +150,7 @@ const pageEdit = async (req, res, mensagem) => {
                                             LEFT JOIN geomorfologia gm ON fi.id_fi = gm.id_fi
                                             LEFT JOIN pedologia p ON fi.id_fi = p.id_fi
                                         ORDER BY e.data_evento DESC;
-                                        `, [dataSelecionada, intervaloHoras, intervaloHoras + 24]);
+                                        `);
         const midia = await client.query('SELECT * FROM midia ORDER BY url_midia ASC');
 
         const mensagemFinal = mensagem || req.session.mensagem;
@@ -209,7 +209,7 @@ const pageCuration = async (req, res, mensagem, dataSelecionada) => {
                                             LEFT JOIN impactos_sociais isoc ON i.id_impacto = isoc.id_impacto
                                             
                                         ORDER BY e.data_evento DESC;
-                                        `);
+                                        `, [dataSelecionada, intervaloHoras, intervaloHoras + 24]);
 
         const midia = await client.query(`SELECT m.id_midia, 
                                                 m.tipo_midia, 
